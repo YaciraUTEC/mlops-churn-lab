@@ -38,9 +38,19 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
-      - run: pip install -r requirements.txt
+      
+      - name: Instalar y verificar dependencias
+        run: |
+          echo "Commit utilizado: $GITHUB_SHA"
+          echo "Dependencias Prometheus declaradas:"
+          grep -i prometheus requirements.txt
+          python -m pip install -r requirements.txt
+          python -m pip show prometheus-client
+          python -c "import prometheus_client; print('Prometheus importado correctamente')"
+
       - name: Tests unitarios (contrato, pipeline de features, API)
-        run: pytest tests/ -v --tb=short
+        run: python -m pytest tests/ -v --tb=short
+
 
   # ── Fase 1 · Data Understanding: contrato de datos ─────────────────────────
   data-validation:
