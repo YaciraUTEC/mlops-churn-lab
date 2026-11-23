@@ -18,10 +18,13 @@ on:
       - '.github/workflows/mlops.yml'
   workflow_dispatch:
 
+
 env:
   PYTHON_VERSION: '3.10'
   IMAGE_NAME: churn-predictor
   AWS_REGION: us-east-1
+  PYTHONPATH: ${{ github.workspace }}/src:${{ github.workspace }}
+
 
 jobs:
 
